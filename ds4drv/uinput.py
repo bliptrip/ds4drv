@@ -61,6 +61,58 @@ def create_mapping(name, description, bustype=0, vendor=0, product=0,
 
 # Pre-configued mappings
 create_mapping(
+    "ds4-fake", "Fake Sony Computer Entertainment Wireless Controller",
+    # Bus type,     vendor, product, version
+    ecodes.BUS_USB, 1356,   1476,    273,
+    # Axes
+    {
+        "ABS_X":        "left_analog_x",
+        "ABS_Y":        "left_analog_y",
+        "ABS_Z":        "right_analog_x",
+        "ABS_RZ":       "right_analog_y",
+        "ABS_RX":       "l2_analog",
+        "ABS_RY":       "r2_analog",
+        "ABS_THROTTLE": "orientation_roll",
+        "ABS_RUDDER":   "orientation_pitch",
+        "ABS_WHEEL":    "orientation_yaw",
+        "ABS_DISTANCE": "motion_z",
+        "ABS_TILT_X":   "motion_x",
+        "ABS_TILT_Y":   "motion_y",
+    },
+    # Axes options
+    {
+        "ABS_THROTTLE": (0, -16385, 16384, 0, 0),
+        "ABS_RUDDER":   (0, -16385, 16384, 0, 0),
+        "ABS_WHEEL":    (0, -16385, 16384, 0, 0),
+        "ABS_DISTANCE": (0, -32768, 32767, 0, 10),
+        "ABS_TILT_X":   (0, -32768, 32767, 0, 10),
+        "ABS_TILT_Y":   (0, -32768, 32767, 0, 10),
+    },
+    # Buttons
+    {
+        "BTN_TR2":    "button_options",
+        "BTN_MODE":   "button_ps",
+        "BTN_TL2":    "button_share",
+        "BTN_B":      "button_cross",
+        "BTN_C":      "button_circle",
+        "BTN_A":      "button_square",
+        "BTN_X":      "button_triangle",
+        "BTN_Y":      "button_l1",
+        "BTN_Z":      "button_r1",
+        "BTN_TL":     "button_l2",
+        "BTN_TR":     "button_r2",
+        "BTN_SELECT": "button_l3",
+        "BTN_START":  "button_r3",
+        "BTN_THUMBL": "button_trackpad"
+    },
+    # Hats
+    {
+        "ABS_HAT0X": ("dpad_left", "dpad_right"),
+        "ABS_HAT0Y": ("dpad_up", "dpad_down")
+    }
+)
+
+create_mapping(
     "ds4", "Sony Computer Entertainment Wireless Controller",
     # Bus type,     vendor, product, version
     ecodes.BUS_USB, 1356,   1476,    273,
