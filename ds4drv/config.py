@@ -57,6 +57,8 @@ backendopt.add_argument("--hidraw", action="store_true",
                              "USB and paired bluetooth devices. Note: "
                              "Bluetooth devices does currently not support "
                              "any LED functionality")
+backendopt.add_argument("--fake", action="store_true",
+                        help="Use fake/ripoff ds4 hidraw device driver.. This can be used to access USB devices.")
 
 daemonopt = parser.add_argument_group("daemon options")
 daemonopt.add_argument("--daemon", action="store_true",
