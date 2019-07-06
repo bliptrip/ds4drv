@@ -4,7 +4,7 @@ import signal
 from threading import Thread
 
 from .actions import ActionRegistry
-from .backends import BluetoothBackend, HidrawBackend
+from .backends import BluetoothBackend, HidrawBackend, FakeBackend
 from .config import load_options
 from .daemon import Daemon
 from .eventloop import EventLoop
@@ -160,7 +160,9 @@ def main():
     except ValueError as err:
         Daemon.exit("Failed to parse options: {0}", err)
 
-    if options.hidraw:
+    if options.fake:
+        backend = FakeBackend(Daemon.logger)
+    elif options.hidraw:
         backend = HidrawBackend(Daemon.logger)
     else:
         backend = BluetoothBackend(Daemon.logger)
