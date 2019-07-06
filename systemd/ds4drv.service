@@ -1,11 +1,12 @@
 [Unit]
-Description=ds4drv daemon
-Requires=bluetooth.service
-After=bluetooth.service
+Description=Sony Dualshock Controller Userspace Driver Daemon
+Requires=systemd-udevd.service
 
 [Service]
-ExecStart=/usr/bin/ds4drv
-Restart=on-abort
+ExecStart=/usr/local/bin/ds4drv --fake --emulate-fake
+Restart=on-failure
+RestartSec=5
 
 [Install]
-WantedBy=bluetooth.target
+Alias=ds4drv
+RequiredBy=systemd-udevd.service
