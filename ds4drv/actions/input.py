@@ -9,6 +9,8 @@ ReportAction.add_option("--emulate-xboxdrv", action="store_true",
 ReportAction.add_option("--emulate-xpad", action="store_true",
                         help="Emulates the same joystick layout as a wired "
                              "Xbox 360 controller used via the xpad module")
+ReportAction.add_option("--emulate-fake", action="store_true",
+                        help="Emulates a USB-only version of a fake PS4 controller.")
 ReportAction.add_option("--emulate-xpad-wireless", action="store_true",
                         help="Emulates the same joystick layout as a wireless "
                              "Xbox 360 controller used via the xpad module")
@@ -62,6 +64,8 @@ class ReportActionInput(ReportAction):
                 joystick_layout = "xpad"
             elif options.emulate_xpad_wireless:
                 joystick_layout = "xpad_wireless"
+            elif options.emulate_fake:
+                joystick_layout = "ds4-fake"
             else:
                 joystick_layout = "ds4"
 
