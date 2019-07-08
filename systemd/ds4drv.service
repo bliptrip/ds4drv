@@ -1,5 +1,5 @@
 [Unit]
-Description=Sony Dualshock Controller Userspace Driver Daemon
+Description=Fake Sony Dualshock Controller Userspace Driver Daemon
 Requires=systemd-udevd.service
 
 [Service]
