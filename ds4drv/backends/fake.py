@@ -54,27 +54,13 @@ class FakeDS4Report(object):
                  "button_r3",
                  "button_ps",
                  "button_trackpad",
-                 "motion_y",
-                 "motion_x",
-                 "motion_z",
-                 "orientation_roll",
-                 "orientation_yaw",
-                 "orientation_pitch",
-                 "trackpad_touch0_id",
-                 "trackpad_touch0_active",
-                 "trackpad_touch0_x",
-                 "trackpad_touch0_y",
-                 "trackpad_touch1_id",
-                 "trackpad_touch1_active",
-                 "trackpad_touch1_x",
-                 "trackpad_touch1_y",
+                 "l2_analog",
+                 "r2_analog",
                  "timestamp",
                  "battery",
                  "plug_usb",
                  "plug_audio",
-                 "plug_mic",
-                 "l2_analog",
-                 "r2_analog"]
+                 "plug_mic"]
 
     def __init__(self, *args, **kwargs):
         for i, value in enumerate(args):
@@ -102,63 +88,32 @@ class FakeDS4Device(DS4Device):
         return FakeDS4Report(
             # left analog stick
             buf[1], buf[2],
-
             # right analog stick
             buf[3], buf[4],
-
             # dpad up, down, left, right
             (dpad in (0, 1, 7)), (dpad in (3, 4, 5)),
             (dpad in (5, 6, 7)), (dpad in (1, 2, 3)),
-
             # buttons cross, circle, square, triangle
             (buf[5] & 32) != 0, (buf[5] & 64) != 0,
             (buf[5] & 16) != 0, (buf[5] & 128) != 0,
-
             # l1, r1 buttons
             (buf[6] & 1) != 0, (buf[6] & 2) != 0,
-
             # r1, r2 buttons
             (buf[6] & 4) != 0, (buf[6] & 8) != 0,
-
             # share and option buttons
             (buf[6] & 16) != 0, (buf[6] & 32) != 0,
-
             # l3 and r3 buttons
             (buf[6] & 64) != 0, (buf[6] & 128) != 0,
-
             # ps and trackpack buttons
             (buf[7] & 1) != 0, (buf[7] & 2) != 0,
-
-            # acceleration
-            S16LE.unpack_from(buf, 13)[0],
-            S16LE.unpack_from(buf, 15)[0],
-            S16LE.unpack_from(buf, 17)[0],
-
-            # orientation
-            -(S16LE.unpack_from(buf, 19)[0]),
-            S16LE.unpack_from(buf, 21)[0],
-            S16LE.unpack_from(buf, 23)[0],
-
-            # trackpad touch 1: id, active, x, y
-            buf[35] & 0x7f, (buf[35] >> 7) == 0,
-            ((buf[37] & 0x0f) << 8) | buf[36],
-            buf[38] << 4 | ((buf[37] & 0xf0) >> 4),
-
-            # trackpad touch 2: id, active, x, y
-            buf[39] & 0x7f, (buf[39] >> 7) == 0,
-            ((buf[41] & 0x0f) << 8) | buf[40],
-            buf[42] << 4 | ((buf[41] & 0xf0) >> 4),
-
+            # l2 analog, r2 analog
+            buf[8], buf[9],
             # timestamp and battery
             buf[7] >> 2,
             buf[30] % 16,
-
             # external inputs (usb, audio, mic)
             (buf[30] & 16) != 0, (buf[30] & 32) != 0,
-            (buf[30] & 64) != 0,
-
-            #l2 and r2 analogs
-            0, 0
+            (buf[30] & 64) != 0
         )
 
     def read_report(self):
